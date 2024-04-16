@@ -1,5 +1,6 @@
 <template>
   <hello-world />
+  <!-- ไม่ได้ใช้งาน -->
 </template>
 
 <script>

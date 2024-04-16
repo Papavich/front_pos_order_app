@@ -40,6 +40,12 @@ const routes = [
         path: '/store',
         name: 'store',
         component: () => import(/* webpackChunkName: "about" */ '../views/StoreView.vue')
+      },
+      {
+        path: '/store-management',
+        name: 'storeManagement',
+        // MyStoreManageView
+        component: () => import(/* webpackChunkName: "about" */ '../views/MyStoreManageView.vue')
       }
       
     ],

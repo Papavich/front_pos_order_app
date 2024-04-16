@@ -2,7 +2,6 @@
   <div>
     <!-- Navbar -->
     <NavbarComponentVue />
-    
     <v-main>
       <router-view/>
     </v-main>
