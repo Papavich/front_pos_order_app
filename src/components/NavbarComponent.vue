@@ -1,7 +1,8 @@
 <template>
     <div class="navbar-container">
-        <!-- <div>My Navbar</div> -->
-        
+            <div>LOGO</div>
+            <div>MENU</div>
+            <div>USER</div>
     </div>
 </template>
 
@@ -13,6 +14,11 @@ export default {
 
 <style>
     .navbar-container {
-        background: pink;
+       background: rgb(245, 201, 226);
+       display: flex;
+       justify-content: space-between;
+       align-content: center;
+       padding: 1rem 2rem;
     }
+
 </style>

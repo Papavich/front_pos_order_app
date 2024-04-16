@@ -14,23 +14,26 @@
           <v-text-field
             name="input_email"
             label="อีเมล"
+            type="email"
             id="input_email"
             v-model="input_email"
+            :rules="[rules.required]"
           ></v-text-field>
           <v-text-field
             name="input_password"
             label="รหัสผ่าน"
             id="input_password"
             type="password"
+            :rules="[rules.required]"
             v-model="input_password"
           ></v-text-field>
         </div>
         <div class="login__input--buttons">
-          <v-btn @click="formSubmit" class="btn-grad" variant="outlined"> Login </v-btn>
+          <v-btn @click="formSubmit" class="btn-grad" variant="outlined"> เข้าสู่ระบบ </v-btn>
         </div>
         <!-- BrushOutline -->
         <div style="margin-top: 1rem;" class="link_register">
-          <a href="#">Don't have Account?, Create Account Now</a>
+          <span>ยังไม่มีบัญชี? </span><a class="login-to-register" href="/register">สมัครเลย</a>
         </div>
       </div>
       <!-- RIGHT -->
@@ -43,12 +46,19 @@
 </template>
 
 <script>
+import {authenticate} from "../services/AllServices"; 
 export default {
   data() {
     return {
       input_email: "",
       input_password: "",
+      rules: {
+        required: value => !!value || 'Field is required',
+      },
     };
+  },
+  created() {
+    // document.body.style.overflow = 'hidden';
   },
   methods: {
     async formSubmit() {
@@ -56,9 +66,24 @@ export default {
       try {
         // # 1. เรียกใช้งาน axios และ ส่งข้อมูลไปยัง API  ด้วย method post
         console.log("Login");
+        let loginData = await this.axios.post("http://localhost:3000/users/api/v1/login", {userEmail:this.input_email, userPassword:this.input_password})
         
+        //# 2. เมื่อ Login สำเร็จจะได้ token ต่าง ๆ กลับมา
+        console.log(loginData);
+        if(loginData) {
+          this.input_email = "";
+          this.input_password = "";
+          // เก็บข้อมูลลง session 
+          authenticate(loginData);
+          // เปลี่ยนไปหน้า home
+          this.$router.push('/');
+        }
+        // console.log(process.env.VUE_APP_LOGIN);
       } catch (error) {
-        console.log("Error!", error);
+        console.log(error.response.data.message);
+        alert(error.response.data.message);
+        this.input_email = "";
+        this.input_password = "";
       }
     }
   }
@@ -85,7 +110,7 @@ background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(241,30,77,1) 48%, r
   -webkit-text-fill-color: transparent;
 }
 
-.icon_title {
+.icon_title, .login-to-register {
   /* background: #5EFFEE;
   background: linear-gradient(to right, #5EFFEE 0%, #FF3FE7 64%);
   -webkit-background-clip: text;
@@ -142,7 +167,7 @@ background: linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(241,30,77,1) 48%, r
   display: flex;
   flex-direction: column;
   flex: 1;
-  background: green;
+  /* background: green; */
 }
 
 .login__pic--top {
