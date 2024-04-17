@@ -113,12 +113,20 @@ export default {
           "http://localhost:3000/products/api/v1/products"
         );
         console.log(allProducts);
-        // filter data
-        this.myProducts = allProducts.data.data;
-        // get user data
+        
+        // get user data id
         let userData = getUserData();
         console.log(userData);
         this.userId = userData;
+
+        let productFullData = allProducts.data.data;
+        // filter
+        let myProductsFilter = productFullData.filter((item)=>{return item.storeId === userData})
+        console.log("myProductsFilter =", myProductsFilter);
+        // set data to state
+        this.myProducts = myProductsFilter;
+
+
         
       } catch (error) {
         console.log(error);
@@ -162,7 +170,7 @@ export default {
         }).catch((error)=>{
             console.log(error);
         })
-        alert("update");
+        alert("อัพเดทข้อมูลสินค้าสำเร็จ");
         // console.log("create new item");
         // fetch new item
         this.fetchAllProduct();
@@ -177,7 +185,7 @@ export default {
             this.closeItem();
             this.fetchAllProduct();
         })
-        alert("new item");
+        alert("สร้างสินค้าสำเร็จ");
       }
     },
 
