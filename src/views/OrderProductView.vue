@@ -36,7 +36,8 @@
           <div @click="decreaseAmount()" class="set-amount__remove">-</div>
         </div>
         <div class="create-order__create-order-btn">
-          <v-btn @click="createOrder()" color="success">Buy Product</v-btn>
+          <v-btn @click="createOrder()" color="success">ซื้อสินค้า</v-btn>
+          <v-btn @click="cancelOrder()" color="warning">ยกเลิก</v-btn>
         </div>
       </v-card>
     </div>
@@ -63,6 +64,9 @@ export default {
     this.getProductById();
   },
   methods: {
+    cancelOrder() {
+        this.$router.push("/store");
+    },
     async getProductById() {
       try {
         let paramsId = this.$route.params.productId;
@@ -105,6 +109,10 @@ export default {
 </script>
 
 <style scope>
+.create-order__create-order-btn {
+    display: flex;
+    gap: 0 1rem;
+}
 .create-order__set-amount {
   
   width: 35%;
@@ -117,9 +125,7 @@ export default {
   gap: 0 1rem;
   justify-content: space-between;
 }
-.create-order__right {
-  padding: 1rem;
-}
+
 
 .create-order__input-amount {
   padding: 1rem;
@@ -130,6 +136,7 @@ export default {
 .set-amount__remove {
   padding: 1rem 1.5rem;
   background: rgb(255, 247, 247);
+  cursor: pointer;
 }
 .set-amount__number {
   padding: 1rem 1.5rem;
@@ -147,6 +154,7 @@ export default {
 
 .create-order__right {
   flex: 1;
+  padding: 2rem 0;
   /* background: red; */
 }
 .create-order__product-detail {
