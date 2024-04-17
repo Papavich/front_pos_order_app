@@ -1,7 +1,9 @@
 <template>
   <div class="store-manage-container">
     <div>
-      <v-btn color="green" @click="newItem()" class="white--text">Add New Product</v-btn>
+      <v-btn color="green" @click="newItem()" class="white--text"
+        >Add New Product</v-btn
+      >
     </div>
     <!-- ทำ v-for -->
     <div class="product-table-manage">
@@ -11,10 +13,26 @@
           <div class="product-manage-card__img">
             <img src="../assets/products/product_1.png" alt="" />
           </div>
-          <div class="product-manage-card__detail">{{ item.productName }}</div>
+          <div class="product-manage-card__detail">
+            <strong
+              ><h2>{{ item.productName }}</h2></strong
+            >
+          </div>
+          <div>ราคาต่อชิ้น: {{ item.productPrice }} บาท</div>
+          <div>จำนวนสินค้าทั้งหมด: {{ item.productAmount }}</div>
           <div class="product-manage-card__button">
-            <v-btn color="orange" @click="editItem(item)" class="manage-card__edit white--text">แก้ไขสินค้า</v-btn>
-            <v-btn color="red" @click="deleteItem(item)" class="manage-card__delete white--text">ลบสินค้า</v-btn>
+            <v-btn
+              color="orange"
+              @click="editItem(item)"
+              class="manage-card__edit white--text"
+              >แก้ไขสินค้า</v-btn
+            >
+            <v-btn
+              color="red"
+              @click="deleteItem(item)"
+              class="manage-card__delete white--text"
+              >ลบสินค้า</v-btn
+            >
             <!--  -->
           </div>
         </div>
@@ -73,7 +91,7 @@
 </template>
 
 <script>
-import { getUserData } from "../services/AllServices";
+import { getUserData, getUserToken } from "../services/AllServices";
 export default {
   data() {
     return {
@@ -94,6 +112,7 @@ export default {
         productPrice: "",
       },
       userId: "",
+      userToken: ""
     };
   },
   computed: {
@@ -113,28 +132,32 @@ export default {
           "http://localhost:3000/products/api/v1/products"
         );
         console.log(allProducts);
-        
+
         // get user data id
         let userData = getUserData();
         console.log(userData);
         this.userId = userData;
 
+        // get user token
+        let getuserTokenInstance = getUserToken();
+        console.log("userToken =", getuserTokenInstance);
+        this.userToken = getuserTokenInstance;
+
         let productFullData = allProducts.data.data;
         // filter
-        let myProductsFilter = productFullData.filter((item)=>{return item.storeId === userData})
+        let myProductsFilter = productFullData.filter((item) => {
+          return item.storeId === userData;
+        });
         console.log("myProductsFilter =", myProductsFilter);
         // set data to state
         this.myProducts = myProductsFilter;
-
-
-        
       } catch (error) {
         console.log(error);
       }
     },
     newItem() {
       this.id = "";
-      this.postData = { ...this.postDefault, storeId: this.userId  };
+      this.postData = { ...this.postDefault, storeId: this.userId };
       this.dialogedit = true;
     },
     editItem(item) {
@@ -142,53 +165,72 @@ export default {
       this.postData = { ...item };
       this.dialogedit = true;
     },
-      deleteItem(item){
-     this.id = item._id;
-    //  call axios delete
-    this.axios.delete(`http://localhost:3000/products/api/v1/products/${this.id}`).then((response)=>{
-        console.log(response);
-        this.fetchAllProduct();
-    }).catch((error)=>{
-        console.log(error);
-    })
+    deleteItem(item) {
+      // alert("ต้องการลบสินค้าหรือไม่");
+      if (confirm("ต้องการลบสินค้าหรือไม่?")) {
+        this.id = item._id;
+        //  call axios delete
+        this.axios
+          .delete(`http://localhost:3000/products/api/v1/products/${this.id}`, {headers: {authorization: `${this.userToken}`}})
+          .then((response) => {
+            console.log(response);
+            alert("ลบสินค้าสำเร็จ");
+            this.fetchAllProduct();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
     closeItem() {
       (this.id = ""), (this.postData = { ...this.postDefault });
       this.dialogedit = false;
     },
-    showText(){
+    showText() {
       console.log("show text");
     },
     saveSelect() {
       if (this.id != "") {
-          // call put axios
-        this.axios.put(`http://localhost:3000/products/api/v1/products/${this.id}`, this.postData).then((response)=>{
+        // call put axios
+        // คำสั่งเพิ่ม header
+        // headers: {authorization: `Bearer ${getToken()}`}
+        console.log("put user token = ", typeof(this.userToken));
+
+        this.axios
+          .put(
+            `http://localhost:3000/products/api/v1/products/${this.id}`,
+            this.postData, {headers: {authorization: `${this.userToken}`}}
+          )
+          .then((response) => {
             console.log(response);
             // this.dialogedit = false
             this.closeItem();
             this.fetchAllProduct();
-        }).catch((error)=>{
+          })
+          .catch((error) => {
             console.log(error);
-        })
+          });
         alert("อัพเดทข้อมูลสินค้าสำเร็จ");
         // console.log("create new item");
         // fetch new item
         this.fetchAllProduct();
       } else {
         // axios to server
-        this.axios.post("http://localhost:3000/products/api/v1/products", this.postData).then((response)=>{
+        this.axios
+          .post("http://localhost:3000/products/api/v1/products", this.postData, {headers: {authorization: `${this.userToken}`}})
+          .then((response) => {
             console.log(response);
             this.closeItem();
             this.fetchAllProduct();
-        }).catch((error)=>{
+          })
+          .catch((error) => {
             console.log(error);
             this.closeItem();
             this.fetchAllProduct();
-        })
+          });
         alert("สร้างสินค้าสำเร็จ");
       }
     },
-
   },
 };
 </script>

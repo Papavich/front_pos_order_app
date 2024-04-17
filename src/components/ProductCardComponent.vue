@@ -6,7 +6,7 @@
         <img src="../assets/products/product_1.png" alt="" />
       </div>
       <div class="product-card__detail">{{productName}}</div>
-      <div>จำนวน: {{productAmount}}</div>
+      <div>จำนวน: {{productAmount}} ชิ้น</div>
       <div class="product-card__button">
         <button @click="buyProduct()" class="btn-grad-buy"><span>ซื้อสินค้า</span></button>
         <!--  -->

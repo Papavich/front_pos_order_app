@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import {getUserToken} from "../services/AllServices";
 export default {
   mounted() {
     // Accessing router params in the mounted hook
@@ -57,7 +58,8 @@ export default {
       orderName:"",
       productId: "",
       productById: {},
-      productAmount: 1
+      productAmount: 1,
+      userToken: ""
     };
   },
   created() {
@@ -76,6 +78,9 @@ export default {
         console.log("product id = ", this.productId);
         console.log("product = ", product);
         this.productById = product.data.data;
+        // get user token
+        let myToken = getUserToken();
+        this.userToken = myToken;
       } catch (error) {
         console.log(error);
       }
@@ -93,7 +98,7 @@ export default {
     async createOrder(){
         try {
             let paramsId = this.$route.params.productId;
-            let createOrderInstance = await this.axios.post(`http://localhost:3000/orders/api/v1/products/${paramsId}/orders`, {orderName:this.orderName, orderProductAmount:this.productAmount});
+            let createOrderInstance = await this.axios.post(`http://localhost:3000/orders/api/v1/products/${paramsId}/orders`, {orderName:this.orderName, orderProductAmount:this.productAmount}, {headers: {authorization: `${this.userToken}`}});
             console.log(createOrderInstance);
             alert("สร้าง Order สำเร็จ"+" ยอดรวม: "+ createOrderInstance.data.data.orderProductTotalPrice +" บาท");
             
