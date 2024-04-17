@@ -29,6 +29,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/RegisterView.vue')
   },
   {
+    path: '/create-order/:productId',
+    name: 'createOrder',
+    component: () => import(/* webpackChunkName: "about" */ '../views/OrderProductView.vue')
+  },
+  {
     path: '',
     name: 'navbar',
     // route level code-splitting

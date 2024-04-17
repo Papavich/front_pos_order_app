@@ -76,7 +76,7 @@ export default {
           // เก็บข้อมูลลง session 
           authenticate(loginData);
           // เปลี่ยนไปหน้า home
-          this.$router.push('/');
+          this.$router.push('/store');
         }
         // console.log(process.env.VUE_APP_LOGIN);
       } catch (error) {

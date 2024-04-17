@@ -12,8 +12,8 @@
         <!-- <div class="products-show"> -->
         <!-- <ProductCardComponent /> -->
         <!-- card product -->
-        <ProductCardComponent :productName="item.productName" />
-        
+        <ProductCardComponent :productName="item.productName" :productAmount="item.productAmount" :productId="item._id" />
+
         <!-- card product -->
         <!-- <v-row>
             <v-col cols="3">

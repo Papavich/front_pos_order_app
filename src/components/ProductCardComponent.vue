@@ -6,8 +6,9 @@
         <img src="../assets/products/product_1.png" alt="" />
       </div>
       <div class="product-card__detail">{{productName}}</div>
+      <div>จำนวน: {{productAmount}}</div>
       <div class="product-card__button">
-        <button class="btn-grad-buy"><a href="#" >ซื้อสินค้า</a></button>
+        <button @click="buyProduct()" class="btn-grad-buy"><span>ซื้อสินค้า</span></button>
         <!--  -->
       </div>
     </div>
@@ -16,7 +17,18 @@
 
 <script>
 export default {
-  props: ['productName'],
+  props: ['productName', 'productId', 'productAmount'],
+  data(){
+    return {
+      id: this.productId
+    }
+  },
+  methods: {
+    buyProduct(){
+      console.log(this.id);
+      this.$router.push(`/create-order/${this.id}`);
+    }
+  }
 };
 </script>
 
