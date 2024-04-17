@@ -91,7 +91,8 @@ export default {
             let paramsId = this.$route.params.productId;
             let createOrderInstance = await this.axios.post(`http://localhost:3000/orders/api/v1/products/${paramsId}/orders`, {orderName:this.orderName, orderProductAmount:this.productAmount});
             console.log(createOrderInstance);
-            alert("สร้าง Order สำเร็จ");
+            alert("สร้าง Order สำเร็จ"+" ยอดรวม: "+ createOrderInstance.data.data.orderProductTotalPrice +" บาท");
+            
             this.$router.push('/store');
 
         } catch (error) {
