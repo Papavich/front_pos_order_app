@@ -15,12 +15,46 @@
       <span class="menu"><a href="/store">Home</a></span>
       <span class="menu"><a href="/store-management">My Store</a></span>
     </div>
-    <div class="navbar__user">USER</div>
+    <div class="navbar__user">
+      <div>ชื่อร้าน : {{userName}}</div>
+      <button @click="logout()">LOGOUT</button>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+// import service
+import {getUserName} from "../services/AllServices";
+import {getUserData} from "../services/AllServices";
+import {logout} from "../services/AllServices";
+
+export default {
+  data(){
+    return {
+      userId:"",
+      userName:""
+    }
+  },
+  created(){
+    this.getUserDataDetail();
+  },
+  methods: {
+    getUserDataDetail(){
+      let getId = getUserData();
+      let getName = getUserName();
+      console.log(getId);
+      console.log(getName);
+      this.userId = getId;
+      this.userName = getName;
+    },
+    logout(){
+      // ทำลาย session
+      logout();
+      // redirection
+      this.$router.push('/login');
+    }
+  }
+};
 </script>
 
 <style scope>
@@ -66,6 +100,7 @@ export default {};
 .navbar__user {
   display: flex;
   align-items: center;
+  gap: 0 1rem;
 }
 
 .menu a{

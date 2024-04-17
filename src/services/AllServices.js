@@ -27,3 +27,32 @@ export const getUserData = () => {
         return false;
     }
 }
+
+export const getUserName = () => {
+    if(window !== "undefined"){
+        console.log("get user data");
+        return JSON.parse(sessionStorage.getItem('userName'));
+    } else {
+        return false;
+    }
+}
+
+export const getUserToken = () => {
+    if(window !== "undefined"){
+        console.log("get user data");
+        return JSON.parse(sessionStorage.getItem('token'));
+    } else {
+        return false;
+    }
+}
+
+export const logout = () => {
+    if(window !== "undefined"){
+        // clear sessionStroage
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("userName");
+        sessionStorage.removeItem("userId");
+    }else {
+        return false;
+    }
+}
