@@ -17,3 +17,13 @@ export const authenticate = (storeData) => {
     // next();
     // จะให้ next รับฟังก์ชันอะไรสักอย่างเข้ามา และสั่งทำงาน
 }
+
+
+export const getUserData = () => {
+    if(window !== "undefined"){
+        console.log("get user data");
+        return JSON.parse(sessionStorage.getItem('userId'));
+    } else {
+        return false;
+    }
+}
