@@ -11,7 +11,7 @@
       <v-card v-for="(item, index) in myProducts" :key="index">
         <div class="product-manage-card">
           <div class="product-manage-card__img">
-            <img src="../assets/products/product_1.png" alt="" />
+            <img :src="item.productURL" alt="" width="230" height="230"/>
           </div>
           <div class="product-manage-card__detail">
             <strong
@@ -78,6 +78,14 @@
                 v-model="postData.productPrice"
               ></v-text-field>
             </v-col>
+            <v-col cols="6">
+              <v-text-field
+                name="productURL"
+                label="URL:"
+                id="productURL"
+                v-model="postData.productURL"
+              ></v-text-field>
+            </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
@@ -104,12 +112,14 @@ export default {
         productName: "",
         productAmount: "",
         productPrice: "",
+        productURL: ""
       },
       postDefault: {
         storeId: "",
         productName: "",
         productAmount: "",
         productPrice: "",
+        productURL: ""
       },
       userId: "",
       userToken: ""
@@ -236,6 +246,11 @@ export default {
 </script>
 
 <style scope>
+.product-manage-card__img img{
+  width: 230px;
+  height: 230px;
+  object-fit: cover;
+}
 .store-manage-container {
   margin: 2rem 2rem;
 }

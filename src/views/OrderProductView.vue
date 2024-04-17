@@ -7,7 +7,7 @@
       <div class="create-order__product-detail">
         <v-card class="create-order__product-detail-card">
           <div class="order-product__img">
-            <img src="../assets/products/product_1.png" alt="" width="300" />
+            <img :src="productById.productURL" alt="" width="300" />
           </div>
           <div class="order-product__name">
             <h1>{{ productById.productName }}</h1>
@@ -114,6 +114,11 @@ export default {
 </script>
 
 <style scope>
+.order-product__img img{
+  width: 230px;
+  height: 230px;
+  object-fit: cover;
+}
 .create-order__create-order-btn {
     display: flex;
     gap: 0 1rem;

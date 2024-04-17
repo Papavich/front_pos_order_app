@@ -3,7 +3,7 @@
     <!-- card -->
     <div class="product-card">
       <div class="product-card__img">
-        <img src="../assets/products/product_1.png" alt="" />
+        <img :src="productURL" alt="" width="230"/>
       </div>
       <div class="product-card__detail">{{productName}}</div>
       <div>จำนวน: {{productAmount}} ชิ้น</div>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  props: ['productName', 'productId', 'productAmount'],
+  props: ['productName', 'productId', 'productAmount', 'productURL'],
   data(){
     return {
       id: this.productId
@@ -33,6 +33,11 @@ export default {
 </script>
 
 <style scope>
+.product-card__img img{
+  width: 230px;
+  height: 230px;
+  object-fit: cover;
+}
 a {
   color: white;
   text-decoration: none;
