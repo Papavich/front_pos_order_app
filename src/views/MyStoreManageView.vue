@@ -231,14 +231,18 @@ export default {
           .then((response) => {
             console.log(response);
             this.closeItem();
+            alert("สร้างสินค้าสำเร็จ");
             this.fetchAllProduct();
+            
           })
           .catch((error) => {
             console.log(error);
             this.closeItem();
+            alert("สร้างสินค้าไม่สำเร็จ");
             this.fetchAllProduct();
+            
           });
-        alert("สร้างสินค้าสำเร็จ");
+        
       }
     },
   },

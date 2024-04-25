@@ -4,6 +4,8 @@
     <div class="product-card">
       <div class="product-card__img">
         <img :src="productURL" alt="" width="230"/>
+        <img :src="`http://localhost:3000/${productImgPath.replace('public', '')}`" alt="">
+        <p>{{productImgPath}}</p>
       </div>
       <div class="product-card__detail">{{productName}}</div>
       <div>จำนวน: {{productAmount}} ชิ้น</div>
@@ -17,7 +19,7 @@
 
 <script>
 export default {
-  props: ['productName', 'productId', 'productAmount', 'productURL'],
+  props: ['productName', 'productId', 'productAmount', 'productURL', 'productImgPath'],
   data(){
     return {
       id: this.productId

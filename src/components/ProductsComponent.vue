@@ -12,7 +12,7 @@
         <!-- <div class="products-show"> -->
         <!-- <ProductCardComponent /> -->
         <!-- card product -->
-        <ProductCardComponent :productName="item.productName" :productAmount="item.productAmount" :productId="item._id" :productURL="item.productURL" />
+        <ProductCardComponent :productName="item.productName" :productAmount="item.productAmount" :productId="item._id" :productURL="item.productURL" :productImgPath="item.productImgPath" />
 
         <!-- card product -->
         <!-- <v-row>
